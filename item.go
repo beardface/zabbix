@@ -57,6 +57,7 @@ type Item struct {
 	Name        string    `json:"name"`
 	Type        ItemType  `json:"type"`
 	ValueType   ValueType `json:"value_type"`
+	LastValue   string    `json:"lastvalue"`
 	DataType    DataType  `json:"data_type"`
 	Delta       DeltaType `json:"delta"`
 	Description string    `json:"description"`
