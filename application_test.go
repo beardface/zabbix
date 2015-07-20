@@ -1,11 +1,12 @@
 package zabbix_test
 
 import (
-	. "."
 	"fmt"
 	"math/rand"
 	"reflect"
 	"testing"
+
+	. "."
 )
 
 func CreateApplication(host *Host, t *testing.T) *Application {
@@ -58,7 +59,7 @@ func TestApplications(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	app2.TemplateId = ""
+	app2.TemplateIds = nil
 	if !reflect.DeepEqual(app, app2) {
 		t.Errorf("Apps are not equal:\n%#v\n%#v", app, app2)
 	}
@@ -67,7 +68,7 @@ func TestApplications(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	app2.TemplateId = ""
+	app2.TemplateIds = nil
 	if !reflect.DeepEqual(app, app2) {
 		t.Errorf("Apps are not equal:\n%#v\n%#v", app, app2)
 	}

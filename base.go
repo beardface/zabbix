@@ -84,6 +84,9 @@ func (api *API) printf(format string, v ...interface{}) {
 func (api *API) callBytes(method string, params interface{}) (b []byte, err error) {
 	id := atomic.AddInt32(&api.id, 1)
 	jsonobj := request{"2.0", method, params, api.Auth, id}
+	if method == "APIInfo.version" { // as of 2.4, this requires no auth param
+		jsonobj = request{"2.0", method, params, "", id}
+	}
 	b, err = json.Marshal(jsonobj)
 	if err != nil {
 		return

@@ -1,11 +1,12 @@
 package zabbix_test
 
 import (
-	. "."
 	"fmt"
 	"math/rand"
 	"reflect"
 	"testing"
+
+	. "."
 )
 
 func CreateHost(group *HostGroup, t *testing.T) *Host {
