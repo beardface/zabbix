@@ -1,8 +1,8 @@
 package zabbix
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/AlekSi/reflector"
 )
 
 type (
@@ -56,7 +56,7 @@ type Item struct {
 	Key         string    `json:"key_"`
 	Name        string    `json:"name"`
 	Type        ItemType  `json:"type"`
-	ValueType   ValueType `json:"value_type"`
+	ValueType   string    `json:"value_type"`
 	LastValue   string    `json:"lastvalue"`
 	DataType    DataType  `json:"data_type"`
 	Delta       DeltaType `json:"delta"`
@@ -65,8 +65,15 @@ type Item struct {
 	History     int       `json:"history,omitempty"`
 	Trends      int       `json:"trends,omitempty"`
 
-	// Fields below used only when creating applications
-	ApplicationIds []string `json:"applications,omitempty"`
+	//returned from the slectApplications query parameter.
+	Applications Applications `json:"applications,omitempty"`
+}
+
+type ItemResponse struct {
+	Jsonrpc string `json:"jsonrpc"`
+	Error   *Error `json:"error"`
+	Result  Items  `json:"result"`
+	Id      int32  `json:"id"`
 }
 
 type Items []Item
@@ -89,12 +96,14 @@ func (api *API) ItemsGet(params Params) (res Items, err error) {
 	if _, present := params["output"]; !present {
 		params["output"] = "extend"
 	}
-	response, err := api.CallWithError("item.get", params)
+	var b []byte
+	b, err = api.callBytes("item.get", params)
 	if err != nil {
 		return
 	}
-
-	reflector.MapsToStructs2(response.Result.([]interface{}), &res, reflector.Strconv, "json")
+	var response ItemResponse
+	err = json.Unmarshal(b, &response)
+	res = response.Result
 	return
 }
 

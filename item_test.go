@@ -1,17 +1,18 @@
 package zabbix_test
 
 import (
-	. "."
 	"testing"
+
+	. "."
 )
 
 func CreateItem(app *Application, t *testing.T) *Item {
 	items := Items{{
-		HostId:         app.HostId,
-		Key:            "key.lala.laa",
-		Name:           "name for key",
-		Type:           ZabbixTrapper,
-		ApplicationIds: []string{app.ApplicationId},
+		HostId:    app.HostId,
+		Key:       "key.lala.laa",
+		Name:      "name for key",
+		Type:      ZabbixTrapper,
+		ValueType: "0",
 	}}
 	err := getAPI(t).ItemsCreate(items)
 	if err != nil {

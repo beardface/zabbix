@@ -4,12 +4,12 @@ import (
 	"github.com/AlekSi/reflector"
 )
 
-// https://www.zabbix.com/documentation/2.0/manual/appendix/api/application/definitions
+// https://www.zabbix.com/documentation/2.4/manual/appendix/api/application/definitions
 type Application struct {
-	ApplicationId string `json:"applicationid,omitempty"`
-	HostId        string `json:"hostid"`
-	Name          string `json:"name"`
-	TemplateId    string `json:"templateid,omitempty"`
+	ApplicationId string   `json:"applicationid,omitempty"`
+	HostId        string   `json:"hostid"`
+	Name          string   `json:"name"`
+	TemplateIds   []string `json:"templateids,omitempty"`
 }
 
 type Applications []Application
